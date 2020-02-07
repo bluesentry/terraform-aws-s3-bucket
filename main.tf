@@ -251,3 +251,13 @@ data "aws_iam_policy_document" "elb_log_delivery" {
     ]
   }
 }
+
+resource "aws_s3_bucket_public_access_block" "this" {
+  count = var.create_bucket && (var.block_public_acls || var.block_public_policy || var.ignore_public_acls || var.restrict_public_buckets) ? 1 : 0
+
+  bucket                  = aws_s3_bucket.this[0].id
+  block_public_acls       = var.block_public_acls
+  block_public_policy     = var.block_public_policy
+  ignore_public_acls      = var.ignore_public_acls
+  restrict_public_buckets = var.restrict_public_buckets
+}

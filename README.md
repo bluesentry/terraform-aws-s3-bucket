@@ -1,4 +1,7 @@
 # AWS S3 bucket Terraform module
+[![GitHub Release](https://img.shields.io/github/v/release/bluesentry/tf-module.s3?style=plastic)](https://github.com/bluesentry/tf-module.s3/releases/latest)
+![Terraform Compatibility](https://img.shields.io/badge/terraform-%3E%3D%200.12-blue?style=plastic)
+
 
 Terraform module which creates S3 bucket on AWS with all (or almost all) features provided by Terraform AWS provider.
 
@@ -6,6 +9,7 @@ This type of resources are supported:
 
 * [S3 Bucket](https://www.terraform.io/docs/providers/aws/r/s3_bucket.html)
 * [S3 Bucket Policy](https://www.terraform.io/docs/providers/aws/r/s3_bucket_policy.html)
+* [S3 Bucket Public Access Block](https://www.terraform.io/docs/providers/aws/r/s3_bucket_public_access_block.html)
 
 These features of S3 bucket configurations are supported:
 
@@ -22,6 +26,10 @@ These features of S3 bucket configurations are supported:
 ## Terraform versions
 
 Only Terraform 0.12 is supported.
+
+## Module Development
+
+Please review the [repo-setup](repo-setup.md) documentation related to local environment setup before modifying this repo.
 
 ## Usage
 
@@ -77,30 +85,40 @@ module "s3_bucket" {
 * [Cross-Region Replication](https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/tree/master/examples/s3-replication) - S3 bucket with Cross-Region Replication (CRR) enabled
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Providers
+
+| Name | Version |
+|------|---------|
+| aws | n/a |
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| acceleration\_status | (Optional) Sets the accelerate configuration of an existing bucket. Can be Enabled or Suspended. | string | `"null"` | no |
-| acl | (Optional) The canned ACL to apply. Defaults to 'private'. | string | `"private"` | no |
-| attach\_elb\_log\_delivery\_policy | Controls if S3 bucket should have ELB log delivery policy attached | bool | `"false"` | no |
-| attach\_policy | Controls if S3 bucket should have bucket policy attached (set to `true` to use value of `policy` as bucket policy) | bool | `"false"` | no |
-| bucket | (Optional, Forces new resource) The name of the bucket. If omitted, Terraform will assign a random, unique name. | string | `"null"` | no |
-| bucket\_prefix | (Optional, Forces new resource) Creates a unique bucket name beginning with the specified prefix. Conflicts with bucket. | string | `"null"` | no |
-| cors\_rule | Map containing a rule of Cross-Origin Resource Sharing. | any | `{}` | no |
-| create\_bucket | Controls if S3 bucket should be created | bool | `"true"` | no |
-| force\_destroy | (Optional, Default:false ) A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are not recoverable. | bool | `"false"` | no |
-| lifecycle\_rule | List of maps containing configuration of object lifecycle management. | any | `[]` | no |
-| logging | Map containing access bucket logging configuration. | map(string) | `{}` | no |
-| object\_lock\_configuration | Map containing S3 object locking configuration. | any | `{}` | no |
-| policy | (Optional) A valid bucket policy JSON document. Note that if the policy document is not specific enough (but still valid), Terraform may view the policy as constantly changing in a terraform plan. In this case, please make sure you use the verbose/specific version of the policy. For more information about building AWS IAM policy documents with Terraform, see the AWS IAM Policy Document Guide. | string | `"null"` | no |
-| region | (Optional) If specified, the AWS region this bucket should reside in. Otherwise, the region used by the callee. | string | `"null"` | no |
-| replication\_configuration | Map containing cross-region replication configuration. | any | `{}` | no |
-| request\_payer | (Optional) Specifies who should bear the cost of Amazon S3 data transfer. Can be either BucketOwner or Requester. By default, the owner of the S3 bucket would incur the costs of any data transfer. See Requester Pays Buckets developer guide for more information. | string | `"null"` | no |
-| server\_side\_encryption\_configuration | Map containing server-side encryption configuration. | any | `{}` | no |
-| tags | (Optional) A mapping of tags to assign to the bucket. | map(string) | `{}` | no |
-| versioning | Map containing versioning configuration. | map(string) | `{}` | no |
-| website | Map containing static web-site hosting or redirect configuration. | map(string) | `{}` | no |
+|------|-------------|------|---------|:-----:|
+| acceleration\_status | (Optional) Sets the accelerate configuration of an existing bucket. Can be Enabled or Suspended. | `string` | n/a | yes |
+| acl | (Optional) The canned ACL to apply. Defaults to 'private'. | `string` | `"private"` | no |
+| attach\_elb\_log\_delivery\_policy | Controls if S3 bucket should have ELB log delivery policy attached | `bool` | `false` | no |
+| attach\_policy | Controls if S3 bucket should have bucket policy attached (set to `true` to use value of `policy` as bucket policy) | `bool` | `false` | no |
+| block\_public\_acls | (Optional) Whether Amazon S3 should block public ACLs for this bucket. | `bool` | `false` | no |
+| block\_public\_policy | (Optional) Whether Amazon S3 should block public bucket policies for this bucket. | `bool` | `false` | no |
+| bucket | (Optional, Forces new resource) The name of the bucket. If omitted, Terraform will assign a random, unique name. | `string` | n/a | yes |
+| bucket\_prefix | (Optional, Forces new resource) Creates a unique bucket name beginning with the specified prefix. Conflicts with bucket. | `string` | n/a | yes |
+| cors\_rule | Map containing a rule of Cross-Origin Resource Sharing. | `any` | `{}` | no |
+| create\_bucket | Controls if S3 bucket should be created | `bool` | `true` | no |
+| force\_destroy | (Optional, Default:false ) A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are not recoverable. | `bool` | `false` | no |
+| ignore\_public\_acls | (Optional) Whether Amazon S3 should ignore public ACLs for this bucket. | `bool` | `false` | no |
+| lifecycle\_rule | List of maps containing configuration of object lifecycle management. | `any` | `[]` | no |
+| logging | Map containing access bucket logging configuration. | `map(string)` | `{}` | no |
+| object\_lock\_configuration | Map containing S3 object locking configuration. | `any` | `{}` | no |
+| policy | (Optional) A valid bucket policy JSON document. Note that if the policy document is not specific enough (but still valid), Terraform may view the policy as constantly changing in a terraform plan. In this case, please make sure you use the verbose/specific version of the policy. For more information about building AWS IAM policy documents with Terraform, see the AWS IAM Policy Document Guide. | `string` | n/a | yes |
+| region | (Optional) If specified, the AWS region this bucket should reside in. Otherwise, the region used by the callee. | `string` | n/a | yes |
+| replication\_configuration | Map containing cross-region replication configuration. | `any` | `{}` | no |
+| request\_payer | (Optional) Specifies who should bear the cost of Amazon S3 data transfer. Can be either BucketOwner or Requester. By default, the owner of the S3 bucket would incur the costs of any data transfer. See Requester Pays Buckets developer guide for more information. | `string` | n/a | yes |
+| restrict\_public\_buckets | (Optional) Whether Amazon S3 should restrict public bucket policies for this bucket. | `bool` | `false` | no |
+| server\_side\_encryption\_configuration | Map containing server-side encryption configuration. | `any` | `{}` | no |
+| tags | (Optional) A mapping of tags to assign to the bucket. | `map(string)` | `{}` | no |
+| versioning | Map containing versioning configuration. | `map(string)` | `{}` | no |
+| website | Map containing static web-site hosting or redirect configuration. | `map(string)` | `{}` | no |
 
 ## Outputs
 
@@ -119,7 +137,7 @@ module "s3_bucket" {
 
 ## Authors
 
-Module managed by [Anton Babenko](https://github.com/antonbabenko).
+Module started from a fork of [terraform-aws-modules/terraform-aws-s3-bucket](terraform-aws-modules/terraform-aws-s3-bucket) by [Anton Babenko](https://github.com/antonbabenko).
 
 ## License
 
