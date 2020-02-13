@@ -37,7 +37,7 @@ Please review the [repo-setup](repo-setup.md) documentation related to local env
 
 ```hcl
 module "s3_bucket" {
-  source = "terraform-aws-modules/s3-bucket/aws"
+  source = "git@github.com:bluesentry/tf-module.s3.git?ref=v2.0.0"
 
   bucket = "my-s3-bucket"
   acl    = "private"
@@ -53,7 +53,7 @@ module "s3_bucket" {
 
 ```hcl
 module "s3_bucket_for_logs" {
-  source = "terraform-aws-modules/s3-bucket/aws"
+  source = "git@github.com:bluesentry/tf-module.s3.git?ref=v2.0.0"
 
   bucket = "my-s3-bucket-for-logs"
   acl    = "log-delivery-write"
@@ -72,7 +72,7 @@ Sometimes you need to have a way to create S3 resources conditionally but Terraf
 ```hcl
 # This S3 bucket will not be created
 module "s3_bucket" {
-  source = "terraform-aws-modules/s3-bucket/aws"
+  source = "git@github.com:bluesentry/tf-module.s3.git?ref=v2.0.0"
 
   create_bucket = false
   # ... omitted
