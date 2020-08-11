@@ -1,3 +1,5 @@
+! Use the parent module this is based on `terraform-aws-modules/terraform-aws-s3-bucket`.  The logic added here was incorporated.  No need to maintain further...
+
 # AWS S3 bucket Terraform module
 [![GitHub Release](https://img.shields.io/github/v/release/bluesentry/tf-module.s3?style=plastic)](https://github.com/bluesentry/tf-module.s3/releases/latest)
 ![Terraform Compatibility](https://img.shields.io/badge/terraform-%3E%3D%200.12-blue?style=plastic)
